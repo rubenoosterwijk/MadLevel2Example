@@ -13,7 +13,7 @@ import com.example.madlevel2example.databinding.ActivityMainBinding
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.activity_main.*
 
-class MainActivity : AppCompatActivity() {
+class qMainActivity : AppCompatActivity() {
     private val reminders = arrayListOf<Reminder>()
     private val reminderAdapter = ReminderAdapter(reminders)
     private lateinit var binding: ActivityMainBinding
@@ -42,6 +42,8 @@ class MainActivity : AppCompatActivity() {
                 DividerItemDecoration.VERTICAL
             )
         )
+
+        createItemTouchHelper().attachToRecyclerView(rvReminders)
     }
 
     private  fun addReminder(reminder: String) {
@@ -56,15 +58,21 @@ class MainActivity : AppCompatActivity() {
 
     private fun createItemTouchHelper(): ItemTouchHelper {
         val callback =  object : ItemTouchHelper.SimpleCallback(0,ItemTouchHelper.LEFT){
-            override fun onMove (
+            override fun onMove(
                 recyclerView: RecyclerView,
-                viewHolder: ReminderAdapter.ViewHolder,
+                viewHolder: RecyclerView.ViewHolder,
                 target: RecyclerView.ViewHolder
             ): Boolean {
                 return false
             }
 
+            override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
+                val position = viewHolder.adapterPosition
+                reminders.removeAt(position)
+                reminderAdapter.notifyDataSetChanged()
+            }
         }
+        return ItemTouchHelper((callback))
     }
 
 }
