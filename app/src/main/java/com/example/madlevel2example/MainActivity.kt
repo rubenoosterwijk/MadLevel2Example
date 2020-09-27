@@ -13,7 +13,7 @@ import com.example.madlevel2example.databinding.ActivityMainBinding
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.activity_main.*
 
-class qMainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity() {
     private val reminders = arrayListOf<Reminder>()
     private val reminderAdapter = ReminderAdapter(reminders)
     private lateinit var binding: ActivityMainBinding
